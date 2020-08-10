@@ -2,14 +2,34 @@ $(document).ready(function () {
 
   // DOM Variables
   const cityName = $('.city-name');
-  const searchBtn = $('.city-search');
-  const weatherSection = $('.weather-forecast');
+  const searchBtn = $('.search-btn');
 
   // City List Array
   let cityList = !localStorage.getItem('city list') ? [] : JSON.parse(localStorage.getItem('city list'));
 
+  // render list function
+  const renderList = () => {
+    cityList.map(city => {
+      const cityBtn = $('<button class="city-btn">');
+
+      cityBtn.on('click', function (e) {
+        e.preventDefault();
+        // Map City name to Weather API URL
+        const weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bb9ce599fcfd1ddd0bc51db84a830cfd&units=imperial`;
+
+        // Getting Weather Data
+        getWeather(weatherURL);
+      })
+      $('.city-list').prepend(cityBtn.text(city));
+    });
+  }
+
+  // render city list on page load
+  renderList();
+
   // Search Functionality
-  searchBtn.on('click', function () {
+  searchBtn.on('click', function (e) {
+    e.preventDefault();
 
     // Map City name to Weather API URL
     const weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName.val()}&appid=bb9ce599fcfd1ddd0bc51db84a830cfd&units=imperial`;
@@ -19,18 +39,22 @@ $(document).ready(function () {
 
     // Add city to city list;
     cityList.push(cityName.val());
+    console.log(cityList);
+
 
     // Add city list to local storage
     localStorage.setItem('city list', JSON.stringify(cityList));
 
-    // Display city list
+    // refresh list after each search
+    $('.city-list').empty();
+    renderList();
+
+    // clear search bar
+    cityName.val('');
   });
 
-  // Add City Buttons to list after each search
-
-
+  // API CALL CURRENT WEATHER
   const getWeather = url => {
-    // API CALL CURRENT WEATHER
     $.ajax({
       url: url,
       method: 'GET'
@@ -52,14 +76,14 @@ $(document).ready(function () {
     });
   }
 
+  // API CALL 5 DAY FORECAST
   const getForecast = url => {
-    // API CALL 5 DAY FORECAST
     $.ajax({
       url: url,
       method: 'GET'
     }).then(function (response) {
       console.log(response.daily);
-    })
+    });
   }
 
-})
+});
