@@ -2,10 +2,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 4rem;
+  height: 9vh;
   background-color: rgb(71, 96, 102);
 }
 
 .title {
   color: #f2f2f2;
+}
+
+.dashboard {
+  width: 100vw;
+  height: 91vh;
+}
+
+.cities {
+  background-color: rgba(160, 157, 157, 0.135);
+  height: 91vh;
+}
+
+.weather-forecast {
+  height: 91vh;
 }
