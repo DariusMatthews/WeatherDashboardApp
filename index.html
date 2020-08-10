@@ -5,22 +5,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
+  <!-- bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- custome css -->
   <link rel="stylesheet" href="app.css">
 </head>
 
 <body>
+
+  <!-- header -->
   <header class="header">
     <h1 class="title">Weather Dashboard</h1>
   </header>
 
+  <!-- dashboard -->
   <section class="dashboard container-fluid">
     <div class="row">
-      <aside class="cities col-3">
 
+      <!-- city search sidebar -->
+      <aside class="city-sidebar col-3">
+
+        <!-- city search -->
+        <h4 class="search-text mt-3">
+          Search for a City:
+        </h4>
+        <div class="input-group mt-6">
+          <input type="text" placeholder="City Name.." class="form-control city-name">
+          <div class="input-group-append">
+            <button class="btn btn-primary city-search">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- city list -->
       </aside>
 
+      <!-- weather forecast -->
       <div class="weather-forecast col-9">
 
       </div>
