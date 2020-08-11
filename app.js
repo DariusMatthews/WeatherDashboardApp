@@ -4,14 +4,21 @@ $(document).ready(function () {
   const cityName = $('.city-name');
   const searchBtn = $('.search-btn');
 
+  // Time variable
+
   // City List Array
   let cityList = !localStorage.getItem('city list') ? [] : JSON.parse(localStorage.getItem('city list'));
 
   // render list function
   const renderList = () => {
     cityList.map(city => {
+      // Create city button
       const cityBtn = $('<button class="city-btn">');
 
+      // Cap first letter of each city name
+      $('.city-list').prepend(cityBtn.text(city.replace(/(^| )(\w)/g, char => char.toUpperCase())));
+
+      // Search city weather on click
       cityBtn.on('click', function (e) {
         e.preventDefault();
         // Map City name to Weather API URL
@@ -19,8 +26,7 @@ $(document).ready(function () {
 
         // Getting Weather Data
         getWeather(weatherURL);
-      })
-      $('.city-list').prepend(cityBtn.text(city));
+      });
     });
   }
 
@@ -60,6 +66,10 @@ $(document).ready(function () {
       method: 'GET'
     }).then(function (response) {
       console.log(response)
+      // Map data to DOM
+      $('.card-title').text(`${response.name} (${new Date().toLocaleString().slice(0, 9)})`);
+
+      $('.temp').text(`temp: ${response.main.temp} °F`)
 
       // store coordinates
       let coord = {
