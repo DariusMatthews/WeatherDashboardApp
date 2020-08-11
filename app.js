@@ -5,6 +5,9 @@ $(document).ready(function () {
   const searchBtn = $('.search-btn');
   const uvNumber = $('<span>');
 
+  // Date Variable
+  const currentDate = new Date();
+
   // City List Array
   let cityList = !localStorage.getItem('city list') ? [] : JSON.parse(localStorage.getItem('city list'));
 
@@ -21,7 +24,7 @@ $(document).ready(function () {
       cityBtn.on('click', function (e) {
         e.preventDefault();
         // Map City name to Weather API URL
-        const weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bb9ce599fcfd1ddd0bc51db84a830cfd&units=imperial`;
+        const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bb9ce599fcfd1ddd0bc51db84a830cfd&units=imperial`;
 
         // Getting Weather Data
         getWeather(weatherURL);
@@ -37,15 +40,13 @@ $(document).ready(function () {
     e.preventDefault();
 
     // Map City name to Weather API URL
-    const weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName.val()}&appid=bb9ce599fcfd1ddd0bc51db84a830cfd&units=imperial`;
+    const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName.val()}&appid=bb9ce599fcfd1ddd0bc51db84a830cfd&units=imperial`;
 
     // Getting Weather Data
     getWeather(weatherURL);
 
     // Add city to city list;
     cityList.push(cityName.val());
-    console.log(cityList);
-
 
     // Add city list to local storage
     localStorage.setItem('city list', JSON.stringify(cityList));
@@ -64,9 +65,8 @@ $(document).ready(function () {
       url: url,
       method: 'GET'
     }).then(function (response) {
-      console.log(response)
       // Map current data to DOM
-      $('.card-title').text(`${response.name} (${new Date().toLocaleString().slice(0, 9)})`);
+      $('.card-title').text(`${response.name} (${currentDate.toLocaleString().slice(0, 9)})`);
 
       $('.temp').text(`temp: ${response.main.temp} °F`);
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
       url: url,
       method: 'GET'
     }).then(function (response) {
-      console.log(response.daily);
+      // Get current weather uv index
       const currentUV = response.current.uvi;
 
       // Map current UV index
@@ -113,6 +113,13 @@ $(document).ready(function () {
         uvNumber.removeClass('extreme very-high high low').addClass('moderate');
       } else {
         uvNumber.removeClass('extreme very-high high moderate').addClass('low');
+      }
+
+      // Map 5 day weather forecast
+      for (let i = 1; i < 6; i++) {
+        // dates for 5 days
+        const dateFormat = `${currentDate.getMonth()}/${currentDate.getDate() + i}/${currentDate.getFullYear()}`;
+        console.log(dateFormat, response.daily[i]);
       }
     });
   }
