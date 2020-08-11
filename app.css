@@ -53,3 +53,17 @@
   list-style: none;
   padding-left: 0;
 }
+
+.card-body {
+  padding-bottom: 0;
+}
+
+.card-text {
+  margin-bottom: 5px;
+}
+
+.extreme { color: rgb(55, 43, 226) }
+.very-high { color: red }
+.high { color: orange }
+.moderate { color: yellow }
+.low { color: green }

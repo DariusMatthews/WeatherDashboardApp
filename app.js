@@ -3,8 +3,7 @@ $(document).ready(function () {
   // DOM Variables
   const cityName = $('.city-name');
   const searchBtn = $('.search-btn');
-
-  // Time variable
+  const uvNumber = $('<span>');
 
   // City List Array
   let cityList = !localStorage.getItem('city list') ? [] : JSON.parse(localStorage.getItem('city list'));
@@ -66,10 +65,14 @@ $(document).ready(function () {
       method: 'GET'
     }).then(function (response) {
       console.log(response)
-      // Map data to DOM
+      // Map current data to DOM
       $('.card-title').text(`${response.name} (${new Date().toLocaleString().slice(0, 9)})`);
 
-      $('.temp').text(`temp: ${response.main.temp} °F`)
+      $('.temp').text(`temp: ${response.main.temp} °F`);
+
+      $('.humidity').text(`humidity: ${response.main.humidity} %`);
+
+      $('.wind-speed').text(`wind speed: ${response.wind.speed} MPH`);
 
       // store coordinates
       let coord = {
@@ -79,7 +82,7 @@ $(document).ready(function () {
 
       // map coords to forecast API URL
       const forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&
-      exclude=current,minutely,hourly&appid=bb9ce599fcfd1ddd0bc51db84a830cfd`
+      exclude=current,minutely,hourly&units=imperial&appid=bb9ce599fcfd1ddd0bc51db84a830cfd`
 
       // get 5 day forecast
       getForecast(forecastURL);
@@ -93,6 +96,24 @@ $(document).ready(function () {
       method: 'GET'
     }).then(function (response) {
       console.log(response.daily);
+      const currentUV = response.current.uvi;
+
+      // Map current UV index
+      $('.uv-index').text(`UV Index: `);
+      $('.uv-index').append(uvNumber.text(`${currentUV}`));
+
+      // Change UV color
+      if (currentUV >= 11) {
+        uvNumber.removeClass('very-high high moderate low').addClass('extreme');
+      } else if (currentUV >= 8) {
+        uvNumber.removeClass('extreme high moderate low').addClass('very-high');
+      } else if (currentUV >= 6) {
+        uvNumber.removeClass('extreme very-high moderate low').addClass('high');
+      } else if (currentUV >= 3) {
+        uvNumber.removeClass('extreme very-high high low').addClass('moderate');
+      } else {
+        uvNumber.removeClass('extreme very-high high moderate').addClass('low');
+      }
     });
   }
 
