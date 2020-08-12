@@ -119,7 +119,33 @@ $(document).ready(function () {
       for (let i = 1; i < 6; i++) {
         // dates for 5 days
         const dateFormat = `${currentDate.getMonth()}/${currentDate.getDate() + i}/${currentDate.getFullYear()}`;
-        console.log(dateFormat, response.daily[i]);
+
+        // Map forecast to the DOM
+        const forecastContainer = $('.week-forecast');
+        const card = $('<div class="card weather-card">');
+        const cardBody = $('<div class="card-body">');
+        const cardTitle = $('<h6 class="card-title">');
+        const weatherDescription = $('<p class="card-text">');
+        const temperature = $('<p class="card-text">');
+        const humidity = $('<p class="card-text">');
+
+        // empty forecast container of previous forecast
+        if (forecastContainer[0].childElementCount === 5) {
+          forecastContainer.empty();
+        }
+
+        // append card & card body to container
+        forecastContainer.append(card);
+        card.append(cardBody);
+
+        //destructure response
+        const { daily } = response;
+
+        // Map data to card title and text
+        cardBody.append(cardTitle.text(dateFormat));
+        cardBody.append(weatherDescription.text(`description: ${daily[i].weather[0].description}`))
+        cardBody.append(temperature.text(`temp: ${daily[i].temp.day}`));
+        cardBody.append(humidity.text(`humidity: ${daily[i].humidity}`));
       }
     });
   }

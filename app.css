@@ -67,3 +67,14 @@
 .high { color: orange }
 .moderate { color: yellow }
 .low { color: green }
+
+.week-forecast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-card {
+  background-color: rgb(60, 150, 253);
+  color: white;
+}
