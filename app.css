@@ -17,11 +17,11 @@
 
 .city-sidebar {
   background-color: rgba(160, 157, 157, 0.135);
-  height: 91vh;
+  min-height: 91vh;
 }
 
 .weather-forecast {
-  height: 91vh;
+  min-height: 91vh;
 }
 
 .city-list {
@@ -70,11 +70,42 @@
 
 .week-forecast {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
 }
 
 .weather-card {
   background-color: rgb(60, 150, 253);
   color: white;
+  padding-bottom: 1rem;
+  width: 165px;
+  height: 170px;
+  margin-bottom: 1rem;
+}
+
+.forecast-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 768px) {
+  .city-sidebar {
+    min-height: 10vh;
+  }
+
+  .day-forecast {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .current-weather-details {
+    text-align: center;
+  }
+
+  .forecast-title {
+    text-align: center;
+  }
 }

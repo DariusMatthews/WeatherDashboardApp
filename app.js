@@ -13,6 +13,10 @@ $(document).ready(function () {
 
   // render list function
   const renderList = () => {
+    // give spacing to list on small screens
+    if (cityList.length !== 0) {
+      $('.city-list').css('margin-bottom', '2rem');
+    }
     cityList.map(city => {
       // Create city button
       const cityBtn = $('<button class="city-btn">');
@@ -123,9 +127,9 @@ $(document).ready(function () {
         // Map forecast to the DOM
         const forecastContainer = $('.week-forecast');
         const card = $('<div class="card weather-card">');
-        const cardBody = $('<div class="card-body">');
-        const cardTitle = $('<h6 class="card-title">');
-        const weatherDescription = $('<p class="card-text">');
+        const cardBody = $('<div class="card-body forecast-info">');
+        const cardTitle = $('<h5 class="card-title">');
+        const weatherDescription = $('<p class="card-text mb-3">');
         const temperature = $('<p class="card-text">');
         const humidity = $('<p class="card-text">');
 
@@ -143,9 +147,9 @@ $(document).ready(function () {
 
         // Map data to card title and text
         cardBody.append(cardTitle.text(dateFormat));
-        cardBody.append(weatherDescription.text(`description: ${daily[i].weather[0].description}`))
-        cardBody.append(temperature.text(`temp: ${daily[i].temp.day}`));
-        cardBody.append(humidity.text(`humidity: ${daily[i].humidity}`));
+        cardBody.append(weatherDescription.text(daily[i].weather[0].description))
+        cardBody.append(temperature.text(`Temp: ${daily[i].temp.day} °F`));
+        cardBody.append(humidity.text(`Humidity: ${daily[i].humidity}%`));
       }
     });
   }
