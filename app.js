@@ -129,9 +129,9 @@ $(document).ready(function () {
         const card = $('<div class="card weather-card">');
         const cardBody = $('<div class="card-body forecast-info">');
         const cardTitle = $('<h5 class="card-title">');
-        const weatherDescription = $('<p class="card-text mb-3">');
+        const weatherDescription = $('<p class="card-text mb-2">');
         const temperature = $('<p class="card-text">');
-        const humidity = $('<p class="card-text">');
+        const humidity = $('<p class="card-text mb-2">');
 
         // empty forecast container of previous forecast
         if (forecastContainer[0].childElementCount === 5) {
@@ -153,5 +153,4 @@ $(document).ready(function () {
       }
     });
   }
-
 });
